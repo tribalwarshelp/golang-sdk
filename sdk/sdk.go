@@ -12,18 +12,17 @@ import (
 	"github.com/tribalwarshelp/shared/models"
 )
 
-const (
-	commonODFields = `rankAtt
-scoreAtt
-rankDef
-scoreDef
-rankTotal
-scoreTotal`
-)
-
 var (
 	ErrServerNameIsEmpty = fmt.Errorf("twhelp sdk: Server name is empty")
-	playerODFields       = fmt.Sprintf(`
+	commonODFields       = `
+		rankAtt
+		scoreAtt
+		rankDef
+		scoreDef
+		rankTotal
+		scoreTotal
+	`
+	playerODFields = fmt.Sprintf(`
 		%s
 		rankSup
 		scoreSup
@@ -308,7 +307,7 @@ type Tribes struct {
 	sdk *SDK
 }
 
-func (ss *Tribes) Read(server string, id int) (*models.Tribe, error) {
+func (ts *Tribes) Read(server string, id int) (*models.Tribe, error) {
 	resp := struct {
 		Tribe *models.Tribe `json:"tribe" gqlgen:"tribe"`
 	}{}
@@ -319,7 +318,7 @@ func (ss *Tribes) Read(server string, id int) (*models.Tribe, error) {
 			}
 		}
 	`, tribeFields)
-	err := ss.sdk.client.Post(minify(query), &resp, client.Var("server", server), client.Var("id", id))
+	err := ts.sdk.client.Post(minify(query), &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -331,7 +330,7 @@ type TribesList struct {
 	Total int             `json:"total" gqlgen:"total"`
 }
 
-func (ss *Tribes) Browse(server string, filter *models.TribeFilter) (*TribesList, error) {
+func (ts *Tribes) Browse(server string, filter *models.TribeFilter) (*TribesList, error) {
 	if filter == nil {
 		filter = &models.TribeFilter{}
 	}
@@ -349,7 +348,7 @@ func (ss *Tribes) Browse(server string, filter *models.TribeFilter) (*TribesList
 		}
 	`, tribeFields)
 
-	err := ss.sdk.client.Post(minify(query), &resp, client.Var("server", server), client.Var("filter", filter))
+	err := ts.sdk.client.Post(minify(query), &resp, client.Var("server", server), client.Var("filter", filter))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -378,7 +377,7 @@ func (incl VillageInclude) String() string {
 	return i
 }
 
-func (ps *Villages) Read(server string, id int, include *VillageInclude) (*models.Village, error) {
+func (vs *Villages) Read(server string, id int, include *VillageInclude) (*models.Village, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -397,7 +396,7 @@ func (ps *Villages) Read(server string, id int, include *VillageInclude) (*model
 			}
 		}
 	`, villageFields, include.String())
-	err := ps.sdk.client.Post(minify(query), &resp, client.Var("server", server), client.Var("id", id))
+	err := vs.sdk.client.Post(minify(query), &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -409,7 +408,7 @@ type VillagesList struct {
 	Total int               `json:"total" gqlgen:"total"`
 }
 
-func (ps *Villages) Browse(server string, filter *models.VillageFilter, include *VillageInclude) (*VillagesList, error) {
+func (vs *Villages) Browse(server string, filter *models.VillageFilter, include *VillageInclude) (*VillagesList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -434,7 +433,7 @@ func (ps *Villages) Browse(server string, filter *models.VillageFilter, include 
 		}
 	`, villageFields, include.String())
 
-	err := ps.sdk.client.Post(minify(query), &resp, client.Var("filter", filter), client.Var("server", server))
+	err := vs.sdk.client.Post(minify(query), &resp, client.Var("filter", filter), client.Var("server", server))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -485,7 +484,7 @@ type ennoblementsResponse struct {
 	Ennoblements []*models.Ennoblement `json:"ennoblements" gqlgen:"ennoblements"`
 }
 
-func (ps *Ennoblements) Browse(server string, include *EnnoblementInclude) ([]*models.Ennoblement, error) {
+func (en *Ennoblements) Browse(server string, include *EnnoblementInclude) ([]*models.Ennoblement, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -501,7 +500,7 @@ func (ps *Ennoblements) Browse(server string, include *EnnoblementInclude) ([]*m
 			}
 		}
 	`, include.String())
-	err := ps.sdk.client.Post(minify(query), &resp, client.Var("server", server))
+	err := en.sdk.client.Post(minify(query), &resp, client.Var("server", server))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
