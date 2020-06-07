@@ -3,10 +3,15 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/tribalwarshelp/golang-sdk/sdk"
 	"github.com/tribalwarshelp/shared/models"
 )
+
+func init() {
+	os.Setenv("TZ", "UTC")
+}
 
 func main() {
 	api := sdk.New("http://localhost:8080/graphql")
@@ -141,7 +146,7 @@ func main() {
 		log.Fatal(err)
 	}
 	for _, ennoblement := range ennoblements {
-		fmt.Print("\n\n")
+		fmt.Print("\n\n", ennoblement.EnnobledAt.String(), "\n")
 		if ennoblement.NewOwner != nil {
 			log.Println(ennoblement.NewOwner.ID, ennoblement.NewOwner.Name)
 			if ennoblement.NewOwner.Tribe != nil {
