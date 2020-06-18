@@ -71,7 +71,7 @@ func New(url string) *SDK {
 		url:        url,
 		httpClient: &http.Client{},
 	}
-	sdk.client = client.New(http.HandlerFunc(sdk.makeRequest))
+	sdk.client = client.New(http.HandlerFunc(sdk.doRequest))
 	sdk.LangVersions = &LangVersions{sdk}
 	sdk.Servers = &Servers{sdk}
 	sdk.Players = &Players{sdk}
@@ -81,7 +81,7 @@ func New(url string) *SDK {
 	return sdk
 }
 
-func (sdk *SDK) makeRequest(w http.ResponseWriter, r *http.Request) {
+func (sdk *SDK) doRequest(w http.ResponseWriter, r *http.Request) {
 	resp, err := sdk.httpClient.Post(sdk.url, "application/json", r.Body)
 	if err != nil {
 		w.WriteHeader(400)
