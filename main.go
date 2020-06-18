@@ -35,13 +35,13 @@ func main() {
 		log.Println(langVersion.Name, langVersion.Tag, langVersion.Host, langVersion.Timezone)
 	}
 
-	server, err := api.Servers.Read("pl151")
+	server, err := api.Servers.Read("pl151", &sdk.ServerInclude{LangVersion: true})
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(server.Key, server.Status)
+	log.Println(server.Key, server.Status, server.LangVersion.Tag)
 
-	serversList, err := api.Servers.Browse(nil)
+	serversList, err := api.Servers.Browse(nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

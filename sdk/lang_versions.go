@@ -1,6 +1,8 @@
 package sdk
 
 import (
+	"fmt"
+
 	"github.com/Kichiyaki/gqlgen-client/client"
 	"github.com/pkg/errors"
 	"github.com/tribalwarshelp/shared/models"
@@ -14,16 +16,13 @@ func (lv *LangVersions) Read(tag models.LanguageTag) (*models.LangVersion, error
 	resp := struct {
 		LangVersion *models.LangVersion `json:"langVersion" gqlgen:"langVersion"`
 	}{}
-	query := `
+	query := fmt.Sprintf(`
 		query langVersion($tag: LanguageTag!) {
 			langVersion(tag: $tag) {
-				tag
-				name
-				host
-				timezone
+				%s
 			}
 		}
-	`
+	`, langVersionFields)
 	err := lv.sdk.client.Post(minifyString(query), &resp, client.Var("tag", tag))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
@@ -43,19 +42,16 @@ func (lv *LangVersions) Browse(filter *models.LangVersionFilter) (*LangVersionsL
 	resp := struct {
 		LangVersions *LangVersionsList `json:"langVersions" gqlgen:"langVersions"`
 	}{}
-	query := `
+	query := fmt.Sprintf(`
 		query langVersions($filter: LangVersionFilter) {
 			langVersions(filter: $filter) {
 				items {
-					tag
-					name
-					host
-					timezone
+					%s
 				}
 				total
 			}
 		}
-	`
+	`, langVersionFields)
 
 	err := lv.sdk.client.Post(minifyString(query), &resp, client.Var("filter", filter))
 	if err != nil {

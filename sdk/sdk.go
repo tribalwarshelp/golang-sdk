@@ -52,6 +52,12 @@ var (
 		x
 		y
 	`
+	langVersionFields = `
+		tag
+		name
+		host
+		timezone
+	`
 )
 
 type SDK struct {
