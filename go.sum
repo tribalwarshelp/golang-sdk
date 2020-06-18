@@ -19,6 +19,8 @@ github.com/stretchr/testify v1.6.0 h1:jlIyCplCJFULU/01vCkhKuTyc3OorI3bJFuw6obfgh
 github.com/stretchr/testify v1.6.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/tribalwarshelp/shared v0.0.0-20200604161459-deeeccf99815 h1:c+BTJgJyif/HDt8bRxqNaK7zQReI59ho9yWdk7a/gNo=
 github.com/tribalwarshelp/shared v0.0.0-20200604161459-deeeccf99815/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
+github.com/tribalwarshelp/shared v0.0.0-20200618145111-9b5a94793865 h1:ZTVUkUS8igtkp3rTHf8tfWi8Mf54WZ6JcEG/Fb7rjlY=
+github.com/tribalwarshelp/shared v0.0.0-20200618145111-9b5a94793865/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 h1:YR8cESwS4TdDjEe65xsg0ogRM/Nc3DYOhEAlW+xobZo=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
