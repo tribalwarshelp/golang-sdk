@@ -41,6 +41,7 @@ func (ss *Servers) Read(key string, incl *ServerInclude) (*models.Server, error)
 				id
 				key
 				status
+				dataUpdatedAt
 				%s
 			}
 		}
@@ -75,6 +76,7 @@ func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Se
 					id
 					key
 					status
+					dataUpdatedAt
 					%s
 				}
 				total
