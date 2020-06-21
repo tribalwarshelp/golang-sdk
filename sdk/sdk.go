@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/Kichiyaki/gqlgen-client/client"
 )
@@ -74,8 +75,10 @@ type SDK struct {
 
 func New(url string) *SDK {
 	sdk := &SDK{
-		url:        url,
-		httpClient: &http.Client{},
+		url: url,
+		httpClient: &http.Client{
+			Timeout: 10 * time.Second,
+		},
 	}
 	sdk.client = client.New(http.HandlerFunc(sdk.doRequest))
 	sdk.LangVersions = &LangVersions{sdk}
