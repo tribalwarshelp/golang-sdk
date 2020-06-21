@@ -61,15 +61,15 @@ var (
 )
 
 type SDK struct {
-	url          string
-	client       *client.Client
-	httpClient   *http.Client
-	LangVersions *LangVersions
-	Servers      *Servers
-	Players      *Players
-	Tribes       *Tribes
-	Villages     *Villages
-	Ennoblements *Ennoblements
+	url              string
+	client           *client.Client
+	httpClient       *http.Client
+	LangVersions     *LangVersions
+	Servers          *Servers
+	Players          *Players
+	Tribes           *Tribes
+	Villages         *Villages
+	LiveEnnoblements *LiveEnnoblements
 }
 
 func New(url string) *SDK {
@@ -83,7 +83,7 @@ func New(url string) *SDK {
 	sdk.Players = &Players{sdk}
 	sdk.Tribes = &Tribes{sdk}
 	sdk.Villages = &Villages{sdk}
-	sdk.Ennoblements = &Ennoblements{sdk}
+	sdk.LiveEnnoblements = &LiveEnnoblements{sdk}
 	return sdk
 }
 

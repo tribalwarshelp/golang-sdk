@@ -8,11 +8,11 @@ import (
 	"github.com/tribalwarshelp/shared/models"
 )
 
-type Ennoblements struct {
+type LiveEnnoblements struct {
 	sdk *SDK
 }
 
-type EnnoblementInclude struct {
+type LiveEnnoblementInclude struct {
 	NewOwner        bool
 	NewOwnerInclude PlayerInclude
 	OldOwner        bool
@@ -20,7 +20,7 @@ type EnnoblementInclude struct {
 	Village         bool
 }
 
-func (incl EnnoblementInclude) String() string {
+func (incl LiveEnnoblementInclude) String() string {
 	i := ""
 	if incl.NewOwner {
 		i += fmt.Sprintf(`
@@ -48,21 +48,21 @@ func (incl EnnoblementInclude) String() string {
 	return i
 }
 
-type ennoblementsResponse struct {
-	Ennoblements []*models.Ennoblement `json:"ennoblements" gqlgen:"ennoblements"`
+type liveEnnoblementsResponse struct {
+	LiveEnnoblements []*models.LiveEnnoblement `json:"liveEnnoblements" gqlgen:"liveEnnoblements"`
 }
 
-func (en *Ennoblements) Browse(server string, include *EnnoblementInclude) ([]*models.Ennoblement, error) {
+func (en *LiveEnnoblements) Browse(server string, include *LiveEnnoblementInclude) ([]*models.LiveEnnoblement, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
 	if include == nil {
-		include = &EnnoblementInclude{}
+		include = &LiveEnnoblementInclude{}
 	}
-	resp := &ennoblementsResponse{}
+	resp := &liveEnnoblementsResponse{}
 	query := fmt.Sprintf(`
-		query ennoblements($server: String!) {
-			ennoblements(server: $server) {
+		query liveEnnoblements($server: String!) {
+			liveEnnoblements(server: $server) {
 				ennobledAt
 				%s
 			}
@@ -72,5 +72,5 @@ func (en *Ennoblements) Browse(server string, include *EnnoblementInclude) ([]*m
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Ennoblements, nil
+	return resp.LiveEnnoblements, nil
 }

@@ -21,6 +21,10 @@ github.com/tribalwarshelp/shared v0.0.0-20200618150949-896cd6c98d06 h1:T87o4fice
 github.com/tribalwarshelp/shared v0.0.0-20200618150949-896cd6c98d06/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
 github.com/tribalwarshelp/shared v0.0.0-20200619170430-9ae1e58e717a h1:DvZaFa0q43ME/j9vBQMgI2v23Re/Dx11pxqpXw5NzC4=
 github.com/tribalwarshelp/shared v0.0.0-20200619170430-9ae1e58e717a/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
+github.com/tribalwarshelp/shared v0.0.0-20200621113135-f37b4069eaaf h1:FoZBGciPITYC26jh6CzEvRhKdm0c3TaCNs1WUCPS9pM=
+github.com/tribalwarshelp/shared v0.0.0-20200621113135-f37b4069eaaf/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
+github.com/tribalwarshelp/shared v0.0.0-20200621115742-5ae0d5ec33f2 h1:xHR69AkeSO34WkjYlTSzD6v2X37hY68e53o6GEoIyFs=
+github.com/tribalwarshelp/shared v0.0.0-20200621115742-5ae0d5ec33f2/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 h1:YR8cESwS4TdDjEe65xsg0ogRM/Nc3DYOhEAlW+xobZo=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=

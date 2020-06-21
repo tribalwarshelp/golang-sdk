@@ -131,7 +131,7 @@ func main() {
 		}
 	}
 
-	ennoblements, err := api.Ennoblements.Browse("pl151", &sdk.EnnoblementInclude{
+	ennoblements, err := api.LiveEnnoblements.Browse("pl151", &sdk.LiveEnnoblementInclude{
 		NewOwner: true,
 		NewOwnerInclude: sdk.PlayerInclude{
 			Tribe: true,
