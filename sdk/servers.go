@@ -38,10 +38,14 @@ func (ss *Servers) Read(key string, incl *ServerInclude) (*models.Server, error)
 	query := fmt.Sprintf(`
 		query server($key: String!) {
 			server(key: $key) {
-				id
 				key
 				status
 				dataUpdatedAt
+				historyUpdatedAt
+				statsUpdatedAt
+				numberOfTribes
+				numberOfPlayers
+				numberOfVillages
 				%s
 			}
 		}
@@ -73,10 +77,11 @@ func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Se
 		query servers($filter: ServerFilter) {
 			servers(filter: $filter) {
 				items {
-					id
 					key
 					status
 					dataUpdatedAt
+					historyUpdatedAt
+					statsUpdatedAt
 					%s
 				}
 				total

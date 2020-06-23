@@ -89,7 +89,7 @@ func main() {
 		log.Println(tribe.ID, tribe.Name, tribe.Tag, tribe.RankAtt, tribe.RankDef)
 	}
 
-	village, err := api.Villages.Read("pl151", 28299, &sdk.VillageInclude{
+	village, err := api.Villages.Read("pl151", 28120, &sdk.VillageInclude{
 		Player: true,
 		PlayerInclude: sdk.PlayerInclude{
 			Tribe: true,
