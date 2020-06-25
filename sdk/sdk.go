@@ -30,9 +30,16 @@ var (
 		totalVillages
 		points
 		rank
-		exist
+		exists
 		dailyGrowth
 		joinedAt
+		deletedAt
+		bestRank
+		bestRankAt
+		mostPoints
+		mostPointsAt
+		mostVillages
+		mostVillagesAt
 		%s
 	`, playerODFields)
 	tribeFields = fmt.Sprintf(`
@@ -44,9 +51,16 @@ var (
 		points
 		allPoints
 		rank
-		exist
+		exists
 		dominance
 		createdAt
+		deletedAt
+		bestRank
+		bestRankAt
+		mostPoints
+		mostPointsAt
+		mostVillages
+		mostVillagesAt
 		%s
 	`, commonODFields)
 	villageFields = `
