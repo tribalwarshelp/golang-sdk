@@ -14,7 +14,7 @@ type Tribes struct {
 
 func (ts *Tribes) Read(server string, id int) (*models.Tribe, error) {
 	resp := struct {
-		Tribe *models.Tribe `json:"tribe" gqlgen:"tribe"`
+		Tribe models.Tribe `json:"tribe" gqlgen:"tribe"`
 	}{}
 	query := fmt.Sprintf(`
 		query tribe($server: String!, $id: Int!) {
@@ -27,20 +27,20 @@ func (ts *Tribes) Read(server string, id int) (*models.Tribe, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Tribe, nil
+	return &resp.Tribe, nil
 }
 
-type TribesList struct {
+type TribeList struct {
 	Items []*models.Tribe `json:"items" gqlgen:"items"`
 	Total int             `json:"total" gqlgen:"total"`
 }
 
-func (ts *Tribes) Browse(server string, filter *models.TribeFilter) (*TribesList, error) {
+func (ts *Tribes) Browse(server string, filter *models.TribeFilter) (*TribeList, error) {
 	if filter == nil {
 		filter = &models.TribeFilter{}
 	}
 	resp := struct {
-		Tribes *TribesList `json:"tribes" gqlgen:"tribes"`
+		Tribes TribeList `json:"tribes" gqlgen:"tribes"`
 	}{}
 	query := fmt.Sprintf(`
 		query tribes($server: String!, $filter: TribeFilter) {
@@ -57,5 +57,5 @@ func (ts *Tribes) Browse(server string, filter *models.TribeFilter) (*TribesList
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Tribes, nil
+	return &resp.Tribes, nil
 }

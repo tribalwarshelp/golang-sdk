@@ -14,7 +14,7 @@ type LangVersions struct {
 
 func (lv *LangVersions) Read(tag models.LanguageTag) (*models.LangVersion, error) {
 	resp := struct {
-		LangVersion *models.LangVersion `json:"langVersion" gqlgen:"langVersion"`
+		LangVersion models.LangVersion `json:"langVersion" gqlgen:"langVersion"`
 	}{}
 	query := fmt.Sprintf(`
 		query langVersion($tag: LanguageTag!) {
@@ -27,20 +27,20 @@ func (lv *LangVersions) Read(tag models.LanguageTag) (*models.LangVersion, error
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.LangVersion, nil
+	return &resp.LangVersion, nil
 }
 
-type LangVersionsList struct {
+type LangVersionList struct {
 	Items []*models.LangVersion `json:"items" gqlgen:"items"`
 	Total int                   `json:"total" gqlgen:"total"`
 }
 
-func (lv *LangVersions) Browse(filter *models.LangVersionFilter) (*LangVersionsList, error) {
+func (lv *LangVersions) Browse(filter *models.LangVersionFilter) (*LangVersionList, error) {
 	if filter == nil {
 		filter = &models.LangVersionFilter{}
 	}
 	resp := struct {
-		LangVersions *LangVersionsList `json:"langVersions" gqlgen:"langVersions"`
+		LangVersions LangVersionList `json:"langVersions" gqlgen:"langVersions"`
 	}{}
 	query := fmt.Sprintf(`
 		query langVersions($filter: LangVersionFilter) {
@@ -57,5 +57,5 @@ func (lv *LangVersions) Browse(filter *models.LangVersionFilter) (*LangVersionsL
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.LangVersions, nil
+	return &resp.LangVersions, nil
 }

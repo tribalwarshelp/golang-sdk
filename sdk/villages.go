@@ -38,7 +38,7 @@ func (vs *Villages) Read(server string, id int, include *VillageInclude) (*model
 		include = &VillageInclude{}
 	}
 	resp := struct {
-		Village *models.Village `json:"village" gqlgen:"village"`
+		Village models.Village `json:"village" gqlgen:"village"`
 	}{}
 
 	query := fmt.Sprintf(`
@@ -53,15 +53,15 @@ func (vs *Villages) Read(server string, id int, include *VillageInclude) (*model
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Village, nil
+	return &resp.Village, nil
 }
 
-type VillagesList struct {
+type VillageList struct {
 	Items []*models.Village `json:"items" gqlgen:"items"`
 	Total int               `json:"total" gqlgen:"total"`
 }
 
-func (vs *Villages) Browse(server string, filter *models.VillageFilter, include *VillageInclude) (*VillagesList, error) {
+func (vs *Villages) Browse(server string, filter *models.VillageFilter, include *VillageInclude) (*VillageList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -72,7 +72,7 @@ func (vs *Villages) Browse(server string, filter *models.VillageFilter, include 
 		include = &VillageInclude{}
 	}
 	resp := struct {
-		Villages *VillagesList
+		Villages VillageList
 	}{}
 	query := fmt.Sprintf(`
 		query villages($server: String!, $filter: VillageFilter) {
@@ -90,5 +90,5 @@ func (vs *Villages) Browse(server string, filter *models.VillageFilter, include 
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Villages, nil
+	return &resp.Villages, nil
 }

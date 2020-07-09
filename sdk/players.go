@@ -36,7 +36,7 @@ func (ps *Players) Read(server string, id int, include *PlayerInclude) (*models.
 		include = &PlayerInclude{}
 	}
 	resp := struct {
-		Player *models.Player `json:"player" gqlgen:"player"`
+		Player models.Player `json:"player" gqlgen:"player"`
 	}{}
 
 	query := fmt.Sprintf(`
@@ -51,15 +51,15 @@ func (ps *Players) Read(server string, id int, include *PlayerInclude) (*models.
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Player, nil
+	return &resp.Player, nil
 }
 
-type PlayersList struct {
+type PlayerList struct {
 	Items []*models.Player `json:"items" gqlgen:"items"`
 	Total int              `json:"total" gqlgen:"total"`
 }
 
-func (ps *Players) Browse(server string, filter *models.PlayerFilter, include *PlayerInclude) (*PlayersList, error) {
+func (ps *Players) Browse(server string, filter *models.PlayerFilter, include *PlayerInclude) (*PlayerList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -70,7 +70,7 @@ func (ps *Players) Browse(server string, filter *models.PlayerFilter, include *P
 		include = &PlayerInclude{}
 	}
 	resp := struct {
-		Players *PlayersList `json:"players" gqlgen:"players"`
+		Players PlayerList `json:"players" gqlgen:"players"`
 	}{}
 	query := fmt.Sprintf(`
 		query players($server: String!, $filter: PlayerFilter) {
@@ -88,5 +88,5 @@ func (ps *Players) Browse(server string, filter *models.PlayerFilter, include *P
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Players, nil
+	return &resp.Players, nil
 }

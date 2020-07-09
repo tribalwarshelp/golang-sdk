@@ -33,7 +33,7 @@ func (ss *Servers) Read(key string, incl *ServerInclude) (*models.Server, error)
 		incl = &ServerInclude{}
 	}
 	resp := struct {
-		Server *models.Server `json:"server" gqlgen:"server"`
+		Server models.Server `json:"server" gqlgen:"server"`
 	}{}
 	query := fmt.Sprintf(`
 		query server($key: String!) {
@@ -54,15 +54,15 @@ func (ss *Servers) Read(key string, incl *ServerInclude) (*models.Server, error)
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Server, nil
+	return &resp.Server, nil
 }
 
-type ServersList struct {
+type ServerList struct {
 	Items []*models.Server `json:"items" gqlgen:"items"`
 	Total int              `json:"total" gqlgen:"total"`
 }
 
-func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*ServersList, error) {
+func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*ServerList, error) {
 	if incl == nil {
 		incl = &ServerInclude{}
 	}
@@ -70,18 +70,21 @@ func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Se
 		filter = &models.ServerFilter{}
 	}
 	resp := struct {
-		Servers *ServersList `json:"servers" gqlgen:"servers"`
+		Servers ServerList `json:"servers" gqlgen:"servers"`
 	}{}
 
 	query := fmt.Sprintf(`
 		query servers($filter: ServerFilter) {
 			servers(filter: $filter) {
-				items {
+					items {
 					key
 					status
 					dataUpdatedAt
 					historyUpdatedAt
 					statsUpdatedAt
+					numberOfTribes
+					numberOfPlayers
+					numberOfVillages
 					%s
 				}
 				total
@@ -93,5 +96,5 @@ func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Se
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
-	return resp.Servers, nil
+	return &resp.Servers, nil
 }
