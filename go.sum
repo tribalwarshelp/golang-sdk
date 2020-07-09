@@ -33,6 +33,8 @@ github.com/tribalwarshelp/shared v0.0.0-20200625120510-6d18ee334662 h1:GBCpdHQsO
 github.com/tribalwarshelp/shared v0.0.0-20200625120510-6d18ee334662/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
 github.com/tribalwarshelp/shared v0.0.0-20200629123803-0cd6cb6f1e87 h1:TMuZUk0wW+8dXSGVJVLRFFhLONKKYJRnLBFvbb9XTrE=
 github.com/tribalwarshelp/shared v0.0.0-20200629123803-0cd6cb6f1e87/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
+github.com/tribalwarshelp/shared v0.0.0-20200707075151-722e4a520a3c h1:wenSReGHPux51q5s+9Ji0TOHCt8Zx6whxsjx8Iv7aZg=
+github.com/tribalwarshelp/shared v0.0.0-20200707075151-722e4a520a3c/go.mod h1:tf+2yTHasV6jAF3V2deZ9slNoCyBzC0fMdTjI7clf6Y=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 h1:YR8cESwS4TdDjEe65xsg0ogRM/Nc3DYOhEAlW+xobZo=
 gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
