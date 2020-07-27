@@ -109,7 +109,7 @@ func New(url string) *SDK {
 }
 
 func (sdk *SDK) Post(query string, response interface{}, options ...client.Option) error {
-	return sdk.client.Post(query, response, options...)
+	return sdk.client.Post(minifyString(query), response, options...)
 }
 
 func (sdk *SDK) doRequest(w http.ResponseWriter, r *http.Request) {

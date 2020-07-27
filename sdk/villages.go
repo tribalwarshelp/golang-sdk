@@ -49,7 +49,7 @@ func (vs *Villages) Read(server string, id int, include *VillageInclude) (*model
 			}
 		}
 	`, villageFields, include.String())
-	err := vs.sdk.Post(minifyString(query), &resp, client.Var("server", server), client.Var("id", id))
+	err := vs.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -86,7 +86,7 @@ func (vs *Villages) Browse(server string, filter *models.VillageFilter, include 
 		}
 	`, villageFields, include.String())
 
-	err := vs.sdk.Post(minifyString(query), &resp, client.Var("filter", filter), client.Var("server", server))
+	err := vs.sdk.Post(query, &resp, client.Var("filter", filter), client.Var("server", server))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

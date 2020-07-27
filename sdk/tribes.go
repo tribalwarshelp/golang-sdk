@@ -23,7 +23,7 @@ func (ts *Tribes) Read(server string, id int) (*models.Tribe, error) {
 			}
 		}
 	`, tribeFields)
-	err := ts.sdk.Post(minifyString(query), &resp, client.Var("server", server), client.Var("id", id))
+	err := ts.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -53,7 +53,7 @@ func (ts *Tribes) Browse(server string, filter *models.TribeFilter) (*TribeList,
 		}
 	`, tribeFields)
 
-	err := ts.sdk.Post(minifyString(query), &resp, client.Var("server", server), client.Var("filter", filter))
+	err := ts.sdk.Post(query, &resp, client.Var("server", server), client.Var("filter", filter))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
