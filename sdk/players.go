@@ -47,7 +47,7 @@ func (ps *Players) Read(server string, id int, include *PlayerInclude) (*models.
 			}
 		}
 	`, playerFields, include.String())
-	err := ps.sdk.client.Post(minifyString(query), &resp, client.Var("server", server), client.Var("id", id))
+	err := ps.sdk.Post(minifyString(query), &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -84,7 +84,7 @@ func (ps *Players) Browse(server string, filter *models.PlayerFilter, include *P
 		}
 	`, playerFields, include.String())
 
-	err := ps.sdk.client.Post(minifyString(query), &resp, client.Var("filter", filter), client.Var("server", server))
+	err := ps.sdk.Post(minifyString(query), &resp, client.Var("filter", filter), client.Var("server", server))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

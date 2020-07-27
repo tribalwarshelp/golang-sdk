@@ -50,7 +50,7 @@ func (ss *Servers) Read(key string, incl *ServerInclude) (*models.Server, error)
 			}
 		}
 	`, incl.String())
-	err := ss.sdk.client.Post(minifyString(query), &resp, client.Var("key", key))
+	err := ss.sdk.Post(minifyString(query), &resp, client.Var("key", key))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -92,7 +92,7 @@ func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Se
 		}
 	`, incl.String())
 
-	err := ss.sdk.client.Post(minifyString(query), &resp, client.Var("filter", filter))
+	err := ss.sdk.Post(minifyString(query), &resp, client.Var("filter", filter))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

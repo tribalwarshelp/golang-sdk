@@ -68,7 +68,7 @@ func (en *LiveEnnoblements) Browse(server string, include *LiveEnnoblementInclud
 			}
 		}
 	`, include.String())
-	err := en.sdk.client.Post(minifyString(query), &resp, client.Var("server", server))
+	err := en.sdk.Post(minifyString(query), &resp, client.Var("server", server))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

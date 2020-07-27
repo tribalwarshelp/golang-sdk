@@ -108,6 +108,10 @@ func New(url string) *SDK {
 	return sdk
 }
 
+func (sdk *SDK) Post(query string, response interface{}, options ...client.Option) error {
+	return sdk.client.Post(query, response, options...)
+}
+
 func (sdk *SDK) doRequest(w http.ResponseWriter, r *http.Request) {
 	resp, err := sdk.httpClient.Post(sdk.url, "application/json", r.Body)
 	if err != nil {

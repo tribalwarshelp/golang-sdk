@@ -23,7 +23,7 @@ func (lv *LangVersions) Read(tag models.LanguageTag) (*models.LangVersion, error
 			}
 		}
 	`, langVersionFields)
-	err := lv.sdk.client.Post(minifyString(query), &resp, client.Var("tag", tag))
+	err := lv.sdk.Post(minifyString(query), &resp, client.Var("tag", tag))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -53,7 +53,7 @@ func (lv *LangVersions) Browse(filter *models.LangVersionFilter) (*LangVersionLi
 		}
 	`, langVersionFields)
 
-	err := lv.sdk.client.Post(minifyString(query), &resp, client.Var("filter", filter))
+	err := lv.sdk.Post(minifyString(query), &resp, client.Var("filter", filter))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
