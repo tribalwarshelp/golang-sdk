@@ -14,7 +14,7 @@ func init() {
 }
 
 func main() {
-	api := sdk.New("http://localhost:8080/graphql")
+	api := sdk.New("https://api.tribalwarshelp.com/graphql")
 
 	langVersion, err := api.LangVersions.Read(models.LanguageTagPL)
 	if err != nil {
@@ -25,13 +25,13 @@ func main() {
 	}
 	log.Println(langVersion.Name, langVersion.Tag, langVersion.Host, langVersion.Timezone)
 
-	langVersionsList, err := api.LangVersions.Browse(&models.LangVersionFilter{
+	langVersionList, err := api.LangVersions.Browse(&models.LangVersionFilter{
 		HostMATCH: "plemiona%",
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, langVersion := range langVersionsList.Items {
+	for _, langVersion := range langVersionList.Items {
 		log.Println(langVersion.Name, langVersion.Tag, langVersion.Host, langVersion.Timezone)
 	}
 
@@ -41,11 +41,11 @@ func main() {
 	}
 	log.Println(server.Key, server.Status, server.LangVersion.Tag)
 
-	serversList, err := api.Servers.Browse(nil, nil)
+	serverList, err := api.Servers.Browse(nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, server := range serversList.Items {
+	for _, server := range serverList.Items {
 		log.Print()
 		log.Println(server.Key, server.Status)
 	}
@@ -56,7 +56,7 @@ func main() {
 	}
 	log.Println(player.ID, player.Name, player.RankAtt, player.RankDef, player.RankSup)
 
-	playersList, err := api.Players.Browse("pl151", &models.PlayerFilter{
+	playerList, err := api.Players.Browse("pl151", &models.PlayerFilter{
 		Sort:  "rank ASC",
 		Limit: 10,
 	}, &sdk.PlayerInclude{
@@ -65,7 +65,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, player := range playersList.Items {
+	for _, player := range playerList.Items {
 		log.Print()
 		log.Println(player.ID, player.Name, player.RankAtt, player.RankDef, player.RankSup)
 		if player.Tribe != nil {
@@ -79,13 +79,13 @@ func main() {
 	}
 	log.Println(tribe.ID, tribe.Name, tribe.Tag, tribe.RankAtt, tribe.RankDef)
 
-	tribesList, err := api.Tribes.Browse("pl151", &models.TribeFilter{
+	tribeList, err := api.Tribes.Browse("pl151", &models.TribeFilter{
 		TagIEQ: ":.+.:",
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, tribe := range tribesList.Items {
+	for _, tribe := range tribeList.Items {
 		log.Println(tribe.ID, tribe.Name, tribe.Tag, tribe.RankAtt, tribe.RankDef)
 	}
 
@@ -106,7 +106,7 @@ func main() {
 		}
 	}
 
-	villageslist, err := api.Villages.Browse("pl151", &models.VillageFilter{
+	villagelist, err := api.Villages.Browse("pl151", &models.VillageFilter{
 		PlayerID: []int{699270453},
 		Sort:     "id ASC",
 		Limit:    10,
@@ -120,7 +120,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, village := range villageslist.Items {
+	for _, village := range villagelist.Items {
 		fmt.Print("\n\n")
 		log.Println(village.ID, village.Name)
 		if village.Player != nil {

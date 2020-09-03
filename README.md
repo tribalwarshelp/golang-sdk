@@ -1,6 +1,6 @@
 # TWHelp Golang SDK
 
-Basic Golang SDK for making HTTP requests to [TWHelp API](https://api.tribalwarshelp.com).
+Golang SDK for making HTTP requests to [TWHelp API](https://api.tribalwarshelp.com).
 
 ## Getting started
 
@@ -16,10 +16,6 @@ and then install SDK:
 go get -u github.com/tribalwarshelp/golang-sdk
 ```
 
-### How to initialize SDK in your Go code?
+## Examples
 
-```go
-api := sdk.New("url")
-```
-
-Example url: https://api.tribalwarshelp.com/
+[A fully working example you can find here.](https://raw.githubusercontent.com/tribalwarshelp/golang-sdk/master/example/main.go)
