@@ -8,11 +8,11 @@ import (
 	"github.com/tribalwarshelp/shared/models"
 )
 
-type Tribes struct {
+type Tribe struct {
 	sdk *SDK
 }
 
-func (ts *Tribes) Read(server string, id int) (*models.Tribe, error) {
+func (t *Tribe) Read(server string, id int) (*models.Tribe, error) {
 	resp := struct {
 		Tribe models.Tribe `json:"tribe" gqlgen:"tribe"`
 	}{}
@@ -23,7 +23,7 @@ func (ts *Tribes) Read(server string, id int) (*models.Tribe, error) {
 			}
 		}
 	`, tribeFields)
-	err := ts.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
+	err := t.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -35,7 +35,7 @@ type TribeList struct {
 	Total int             `json:"total" gqlgen:"total"`
 }
 
-func (ts *Tribes) Browse(server string, filter *models.TribeFilter) (*TribeList, error) {
+func (t *Tribe) Browse(server string, filter *models.TribeFilter) (*TribeList, error) {
 	if filter == nil {
 		filter = &models.TribeFilter{}
 	}
@@ -53,7 +53,7 @@ func (ts *Tribes) Browse(server string, filter *models.TribeFilter) (*TribeList,
 		}
 	`, tribeFields)
 
-	err := ts.sdk.Post(query, &resp, client.Var("server", server), client.Var("filter", filter))
+	err := t.sdk.Post(query, &resp, client.Var("server", server), client.Var("filter", filter))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

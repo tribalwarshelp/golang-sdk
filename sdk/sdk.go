@@ -71,8 +71,8 @@ var (
 		x
 		y
 	`
-	langVersionFields = `
-		tag
+	versionFields = `
+		code
 		name
 		host
 		timezone
@@ -80,15 +80,15 @@ var (
 )
 
 type SDK struct {
-	url              string
-	client           *client.Client
-	httpClient       *http.Client
-	LangVersions     *LangVersions
-	Servers          *Servers
-	Players          *Players
-	Tribes           *Tribes
-	Villages         *Villages
-	LiveEnnoblements *LiveEnnoblements
+	url             string
+	client          *client.Client
+	httpClient      *http.Client
+	Version         *Version
+	Server          *Server
+	Player          *Player
+	Tribe           *Tribe
+	Village         *Village
+	LiveEnnoblement *LiveEnnoblement
 }
 
 func New(url string) *SDK {
@@ -99,12 +99,12 @@ func New(url string) *SDK {
 		},
 	}
 	sdk.client = client.New(http.HandlerFunc(sdk.doRequest))
-	sdk.LangVersions = &LangVersions{sdk}
-	sdk.Servers = &Servers{sdk}
-	sdk.Players = &Players{sdk}
-	sdk.Tribes = &Tribes{sdk}
-	sdk.Villages = &Villages{sdk}
-	sdk.LiveEnnoblements = &LiveEnnoblements{sdk}
+	sdk.Version = &Version{sdk}
+	sdk.Server = &Server{sdk}
+	sdk.Player = &Player{sdk}
+	sdk.Tribe = &Tribe{sdk}
+	sdk.Village = &Village{sdk}
+	sdk.LiveEnnoblement = &LiveEnnoblement{sdk}
 	return sdk
 }
 

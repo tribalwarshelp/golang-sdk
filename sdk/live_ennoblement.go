@@ -8,7 +8,7 @@ import (
 	"github.com/tribalwarshelp/shared/models"
 )
 
-type LiveEnnoblements struct {
+type LiveEnnoblement struct {
 	sdk *SDK
 }
 
@@ -52,7 +52,7 @@ type liveEnnoblementsResponse struct {
 	LiveEnnoblements []*models.LiveEnnoblement `json:"liveEnnoblements" gqlgen:"liveEnnoblements"`
 }
 
-func (en *LiveEnnoblements) Browse(server string, include *LiveEnnoblementInclude) ([]*models.LiveEnnoblement, error) {
+func (en *LiveEnnoblement) Browse(server string, include *LiveEnnoblementInclude) ([]*models.LiveEnnoblement, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}

@@ -16,32 +16,29 @@ func init() {
 func main() {
 	api := sdk.New("https://api.tribalwarshelp.com/graphql")
 
-	langVersion, err := api.LangVersions.Read(models.LanguageTagPL)
+	version, err := api.Version.Read(models.VersionCodePL)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println(langVersion.Name, langVersion.Tag, langVersion.Host, langVersion.Timezone)
+	log.Println(version.Name, version.Code, version.Host, version.Timezone)
 
-	langVersionList, err := api.LangVersions.Browse(&models.LangVersionFilter{
+	versionList, err := api.Version.Browse(&models.VersionFilter{
 		HostMATCH: "plemiona%",
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, langVersion := range langVersionList.Items {
-		log.Println(langVersion.Name, langVersion.Tag, langVersion.Host, langVersion.Timezone)
+	for _, version := range versionList.Items {
+		log.Println(version.Name, version.Code, version.Host, version.Timezone)
 	}
 
-	server, err := api.Servers.Read("pl151", &sdk.ServerInclude{LangVersion: true})
+	server, err := api.Server.Read("pl151", &sdk.ServerInclude{Version: true})
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(server.Key, server.Status, server.LangVersion.Tag)
+	log.Println(server.Key, server.Status, server.Version.Code)
 
-	serverList, err := api.Servers.Browse(nil, nil)
+	serverList, err := api.Server.Browse(nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -50,13 +47,13 @@ func main() {
 		log.Println(server.Key, server.Status)
 	}
 
-	player, err := api.Players.Read("pl151", 699813215, nil)
+	player, err := api.Player.Read("pl151", 699813215, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println(player.ID, player.Name, player.RankAtt, player.RankDef, player.RankSup)
 
-	playerList, err := api.Players.Browse("pl151", &models.PlayerFilter{
+	playerList, err := api.Player.Browse("pl151", &models.PlayerFilter{
 		Sort:  "rank ASC",
 		Limit: 10,
 	}, &sdk.PlayerInclude{
@@ -73,13 +70,13 @@ func main() {
 		}
 	}
 
-	tribe, err := api.Tribes.Read("pl151", 894)
+	tribe, err := api.Tribe.Read("pl151", 894)
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println(tribe.ID, tribe.Name, tribe.Tag, tribe.RankAtt, tribe.RankDef)
 
-	tribeList, err := api.Tribes.Browse("pl151", &models.TribeFilter{
+	tribeList, err := api.Tribe.Browse("pl151", &models.TribeFilter{
 		TagIEQ: ":.+.:",
 	})
 	if err != nil {
@@ -89,7 +86,7 @@ func main() {
 		log.Println(tribe.ID, tribe.Name, tribe.Tag, tribe.RankAtt, tribe.RankDef)
 	}
 
-	village, err := api.Villages.Read("pl151", 28120, &sdk.VillageInclude{
+	village, err := api.Village.Read("pl151", 28120, &sdk.VillageInclude{
 		Player: true,
 		PlayerInclude: sdk.PlayerInclude{
 			Tribe: true,
@@ -106,7 +103,7 @@ func main() {
 		}
 	}
 
-	villagelist, err := api.Villages.Browse("pl151", &models.VillageFilter{
+	villagelist, err := api.Village.Browse("pl151", &models.VillageFilter{
 		PlayerID: []int{699270453},
 		Sort:     "id ASC",
 		Limit:    10,
@@ -131,7 +128,7 @@ func main() {
 		}
 	}
 
-	ennoblements, err := api.LiveEnnoblements.Browse("pl151", &sdk.LiveEnnoblementInclude{
+	ennoblements, err := api.LiveEnnoblement.Browse("pl151", &sdk.LiveEnnoblementInclude{
 		NewOwner: true,
 		NewOwnerInclude: sdk.PlayerInclude{
 			Tribe: true,

@@ -8,7 +8,7 @@ import (
 	"github.com/tribalwarshelp/shared/models"
 )
 
-type Villages struct {
+type Village struct {
 	sdk *SDK
 }
 
@@ -30,7 +30,7 @@ func (incl VillageInclude) String() string {
 	return i
 }
 
-func (vs *Villages) Read(server string, id int, include *VillageInclude) (*models.Village, error) {
+func (v *Village) Read(server string, id int, include *VillageInclude) (*models.Village, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -49,7 +49,7 @@ func (vs *Villages) Read(server string, id int, include *VillageInclude) (*model
 			}
 		}
 	`, villageFields, include.String())
-	err := vs.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
+	err := v.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -61,7 +61,7 @@ type VillageList struct {
 	Total int               `json:"total" gqlgen:"total"`
 }
 
-func (vs *Villages) Browse(server string, filter *models.VillageFilter, include *VillageInclude) (*VillageList, error) {
+func (v *Village) Browse(server string, filter *models.VillageFilter, include *VillageInclude) (*VillageList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -86,7 +86,7 @@ func (vs *Villages) Browse(server string, filter *models.VillageFilter, include 
 		}
 	`, villageFields, include.String())
 
-	err := vs.sdk.Post(query, &resp, client.Var("filter", filter), client.Var("server", server))
+	err := v.sdk.Post(query, &resp, client.Var("filter", filter), client.Var("server", server))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

@@ -8,7 +8,7 @@ import (
 	"github.com/tribalwarshelp/shared/models"
 )
 
-type Players struct {
+type Player struct {
 	sdk *SDK
 }
 
@@ -28,7 +28,7 @@ func (incl PlayerInclude) String() string {
 	return i
 }
 
-func (ps *Players) Read(server string, id int, include *PlayerInclude) (*models.Player, error) {
+func (p *Player) Read(server string, id int, include *PlayerInclude) (*models.Player, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -47,7 +47,7 @@ func (ps *Players) Read(server string, id int, include *PlayerInclude) (*models.
 			}
 		}
 	`, playerFields, include.String())
-	err := ps.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
+	err := p.sdk.Post(query, &resp, client.Var("server", server), client.Var("id", id))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -59,7 +59,7 @@ type PlayerList struct {
 	Total int              `json:"total" gqlgen:"total"`
 }
 
-func (ps *Players) Browse(server string, filter *models.PlayerFilter, include *PlayerInclude) (*PlayerList, error) {
+func (p *Player) Browse(server string, filter *models.PlayerFilter, include *PlayerInclude) (*PlayerList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -84,7 +84,7 @@ func (ps *Players) Browse(server string, filter *models.PlayerFilter, include *P
 		}
 	`, playerFields, include.String())
 
-	err := ps.sdk.Post(query, &resp, client.Var("filter", filter), client.Var("server", server))
+	err := p.sdk.Post(query, &resp, client.Var("filter", filter), client.Var("server", server))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

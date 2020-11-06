@@ -8,27 +8,27 @@ import (
 	"github.com/tribalwarshelp/shared/models"
 )
 
-type Servers struct {
+type Server struct {
 	sdk *SDK
 }
 
 type ServerInclude struct {
-	LangVersion bool
+	Version bool
 }
 
 func (incl ServerInclude) String() string {
 	i := ""
-	if incl.LangVersion {
+	if incl.Version {
 		i += fmt.Sprintf(`
-			langVersion {
+			version {
 				%s
 			}
-		`, langVersionFields)
+		`, versionFields)
 	}
 	return i
 }
 
-func (ss *Servers) Read(key string, incl *ServerInclude) (*models.Server, error) {
+func (s *Server) Read(key string, incl *ServerInclude) (*models.Server, error) {
 	if incl == nil {
 		incl = &ServerInclude{}
 	}
@@ -50,7 +50,7 @@ func (ss *Servers) Read(key string, incl *ServerInclude) (*models.Server, error)
 			}
 		}
 	`, incl.String())
-	err := ss.sdk.Post(query, &resp, client.Var("key", key))
+	err := s.sdk.Post(query, &resp, client.Var("key", key))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
@@ -62,7 +62,7 @@ type ServerList struct {
 	Total int              `json:"total" gqlgen:"total"`
 }
 
-func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*ServerList, error) {
+func (s *Server) Browse(filter *models.ServerFilter, incl *ServerInclude) (*ServerList, error) {
 	if incl == nil {
 		incl = &ServerInclude{}
 	}
@@ -92,7 +92,7 @@ func (ss *Servers) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Se
 		}
 	`, incl.String())
 
-	err := ss.sdk.Post(query, &resp, client.Var("filter", filter))
+	err := s.sdk.Post(query, &resp, client.Var("filter", filter))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
