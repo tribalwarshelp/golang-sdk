@@ -61,7 +61,12 @@ type VillageList struct {
 	Total int               `json:"total" gqlgen:"total"`
 }
 
-func (v *Village) Browse(server string, filter *models.VillageFilter, include *VillageInclude) (*VillageList, error) {
+func (v *Village) Browse(server string,
+	limit,
+	offset int,
+	sort []string,
+	filter *models.VillageFilter,
+	include *VillageInclude) (*VillageList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -75,8 +80,8 @@ func (v *Village) Browse(server string, filter *models.VillageFilter, include *V
 		Villages VillageList
 	}{}
 	query := fmt.Sprintf(`
-		query villages($server: String!, $filter: VillageFilter) {
-			villages(server: $server, filter: $filter) {
+		query villages($server: String!, $filter: VillageFilter, $limit: Int, $offset: Int, $sort: [String!]) {
+			villages(server: $server, filter: $filter, limit: $limit, offset: $offset, sort: $sort) {
 				items {
 					%s
 					%s
@@ -86,7 +91,13 @@ func (v *Village) Browse(server string, filter *models.VillageFilter, include *V
 		}
 	`, villageFields, include.String())
 
-	err := v.sdk.Post(query, &resp, client.Var("filter", filter), client.Var("server", server))
+	err := v.sdk.Post(query,
+		&resp,
+		client.Var("filter", filter),
+		client.Var("server", server),
+		client.Var("limit", limit),
+		client.Var("offset", offset),
+		client.Var("sort", sort))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

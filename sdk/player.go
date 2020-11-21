@@ -59,7 +59,12 @@ type PlayerList struct {
 	Total int              `json:"total" gqlgen:"total"`
 }
 
-func (p *Player) Browse(server string, filter *models.PlayerFilter, include *PlayerInclude) (*PlayerList, error) {
+func (p *Player) Browse(server string,
+	limit,
+	offset int,
+	sort []string,
+	filter *models.PlayerFilter,
+	include *PlayerInclude) (*PlayerList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -73,8 +78,8 @@ func (p *Player) Browse(server string, filter *models.PlayerFilter, include *Pla
 		Players PlayerList `json:"players" gqlgen:"players"`
 	}{}
 	query := fmt.Sprintf(`
-		query players($server: String!, $filter: PlayerFilter) {
-			players(server: $server, filter: $filter) {
+		query players($server: String!, $filter: PlayerFilter, $limit: Int, $offset: Int, $sort: [String!]) {
+			players(server: $server, filter: $filter, limit: $limit, offset: $offset, sort: $sort) {
 				items {
 					%s
 					%s
@@ -84,7 +89,13 @@ func (p *Player) Browse(server string, filter *models.PlayerFilter, include *Pla
 		}
 	`, playerFields, include.String())
 
-	err := p.sdk.Post(query, &resp, client.Var("filter", filter), client.Var("server", server))
+	err := p.sdk.Post(query,
+		&resp,
+		client.Var("filter", filter),
+		client.Var("server", server),
+		client.Var("limit", limit),
+		client.Var("offset", offset),
+		client.Var("sort", sort))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

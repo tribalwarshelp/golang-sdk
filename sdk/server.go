@@ -62,7 +62,11 @@ type ServerList struct {
 	Total int              `json:"total" gqlgen:"total"`
 }
 
-func (s *Server) Browse(filter *models.ServerFilter, incl *ServerInclude) (*ServerList, error) {
+func (s *Server) Browse(limit,
+	offset int,
+	sort []string,
+	filter *models.ServerFilter,
+	incl *ServerInclude) (*ServerList, error) {
 	if incl == nil {
 		incl = &ServerInclude{}
 	}
@@ -74,8 +78,8 @@ func (s *Server) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Serv
 	}{}
 
 	query := fmt.Sprintf(`
-		query servers($filter: ServerFilter) {
-			servers(filter: $filter) {
+		query servers($filter: ServerFilter, $limit: Int, $offset: Int, $sort: [String!]) {
+			servers(filter: $filter, limit: $limit, offset: $offset, sort: $sort) {
 					items {
 					key
 					status
@@ -92,7 +96,12 @@ func (s *Server) Browse(filter *models.ServerFilter, incl *ServerInclude) (*Serv
 		}
 	`, incl.String())
 
-	err := s.sdk.Post(query, &resp, client.Var("filter", filter))
+	err := s.sdk.Post(query,
+		&resp,
+		client.Var("filter", filter),
+		client.Var("limit", limit),
+		client.Var("offset", offset),
+		client.Var("sort", sort))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}

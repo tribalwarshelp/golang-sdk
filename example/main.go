@@ -14,7 +14,7 @@ func init() {
 }
 
 func main() {
-	api := sdk.New("https://api.tribalwarshelp.com/graphql")
+	api := sdk.New("http://localhost:8080/graphql")
 
 	version, err := api.Version.Read(models.VersionCodePL)
 	if err != nil {
@@ -22,7 +22,7 @@ func main() {
 	}
 	log.Println(version.Name, version.Code, version.Host, version.Timezone)
 
-	versionList, err := api.Version.Browse(&models.VersionFilter{
+	versionList, err := api.Version.Browse(0, 0, []string{}, &models.VersionFilter{
 		HostMATCH: "plemiona%",
 	})
 	if err != nil {
@@ -38,12 +38,11 @@ func main() {
 	}
 	log.Println(server.Key, server.Status, server.Version.Code)
 
-	serverList, err := api.Server.Browse(nil, nil)
+	serverList, err := api.Server.Browse(3, 0, []string{}, nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, server := range serverList.Items {
-		log.Print()
 		log.Println(server.Key, server.Status)
 	}
 
@@ -53,17 +52,19 @@ func main() {
 	}
 	log.Println(player.ID, player.Name, player.RankAtt, player.RankDef, player.RankSup)
 
-	playerList, err := api.Player.Browse("pl151", &models.PlayerFilter{
-		Sort:  "rank ASC",
-		Limit: 10,
-	}, &sdk.PlayerInclude{
-		Tribe: true,
-	})
+	playerList, err := api.Player.Browse("pl151",
+		10,
+		0,
+		[]string{"rank ASC"},
+		&models.PlayerFilter{
+			Limit: 10,
+		}, &sdk.PlayerInclude{
+			Tribe: true,
+		})
 	if err != nil {
 		log.Fatal(err)
 	}
 	for _, player := range playerList.Items {
-		log.Print()
 		log.Println(player.ID, player.Name, player.RankAtt, player.RankDef, player.RankSup)
 		if player.Tribe != nil {
 			log.Println(player.Tribe.ID, player.Tribe.Tag)
@@ -76,7 +77,7 @@ func main() {
 	}
 	log.Println(tribe.ID, tribe.Name, tribe.Tag, tribe.RankAtt, tribe.RankDef)
 
-	tribeList, err := api.Tribe.Browse("pl151", &models.TribeFilter{
+	tribeList, err := api.Tribe.Browse("pl151", 10, 0, []string{}, &models.TribeFilter{
 		TagIEQ: ":.+.:",
 	})
 	if err != nil {
@@ -103,16 +104,18 @@ func main() {
 		}
 	}
 
-	villagelist, err := api.Village.Browse("pl151", &models.VillageFilter{
-		PlayerID: []int{699270453},
-		Sort:     "id ASC",
-		Limit:    10,
-	}, &sdk.VillageInclude{
-		Player: true,
-		PlayerInclude: sdk.PlayerInclude{
-			Tribe: true,
-		},
-	})
+	villagelist, err := api.Village.Browse("pl151",
+		10,
+		0,
+		[]string{"id ASC"},
+		&models.VillageFilter{
+			PlayerID: []int{699270453},
+		}, &sdk.VillageInclude{
+			Player: true,
+			PlayerInclude: sdk.PlayerInclude{
+				Tribe: true,
+			},
+		})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -35,7 +35,11 @@ type TribeList struct {
 	Total int             `json:"total" gqlgen:"total"`
 }
 
-func (t *Tribe) Browse(server string, filter *models.TribeFilter) (*TribeList, error) {
+func (t *Tribe) Browse(server string,
+	limit,
+	offset int,
+	sort []string,
+	filter *models.TribeFilter) (*TribeList, error) {
 	if filter == nil {
 		filter = &models.TribeFilter{}
 	}
@@ -43,8 +47,8 @@ func (t *Tribe) Browse(server string, filter *models.TribeFilter) (*TribeList, e
 		Tribes TribeList `json:"tribes" gqlgen:"tribes"`
 	}{}
 	query := fmt.Sprintf(`
-		query tribes($server: String!, $filter: TribeFilter) {
-			tribes(server: $server, filter: $filter) {
+		query tribes($server: String!, $filter: TribeFilter, $limit: Int, $offset: Int, $sort: [String!]) {
+			tribes(server: $server, filter: $filter, limit: $limit, offset: $offset, sort: $sort) {
 				items {
 					%s
 				}
@@ -53,7 +57,13 @@ func (t *Tribe) Browse(server string, filter *models.TribeFilter) (*TribeList, e
 		}
 	`, tribeFields)
 
-	err := t.sdk.Post(query, &resp, client.Var("server", server), client.Var("filter", filter))
+	err := t.sdk.Post(query,
+		&resp,
+		client.Var("filter", filter),
+		client.Var("server", server),
+		client.Var("limit", limit),
+		client.Var("offset", offset),
+		client.Var("sort", sort))
 	if err != nil {
 		return nil, errors.Wrap(err, "twhelp sdk")
 	}
