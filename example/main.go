@@ -14,7 +14,7 @@ func init() {
 }
 
 func main() {
-	api := sdk.New("http://localhost:8080/graphql")
+	api := sdk.New("https://api.tribalwarshelp.com/graphql")
 
 	version, err := api.Version.Read(models.VersionCodePL)
 	if err != nil {
