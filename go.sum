@@ -25,6 +25,8 @@ github.com/tribalwarshelp/shared v0.0.0-20201107073846-5e8e2d44d75c h1:Lgqaf1a5z
 github.com/tribalwarshelp/shared v0.0.0-20201107073846-5e8e2d44d75c/go.mod h1:Lxk6zaQhPTPrgz9ksMgg51m8XgflrCo/kRBx2cM3yfk=
 github.com/tribalwarshelp/shared v0.0.0-20201225112152-d1d8bc92fc33 h1:ItFd9kzpvO69r3Ta7S8+3OT6Wc56Ga5MEGBYW7DotUE=
 github.com/tribalwarshelp/shared v0.0.0-20201225112152-d1d8bc92fc33/go.mod h1:Lxk6zaQhPTPrgz9ksMgg51m8XgflrCo/kRBx2cM3yfk=
+github.com/tribalwarshelp/shared v0.0.0-20201230135308-316413cf7f53 h1:uIkJ6PVqnGHBM5QE0mcsN+3fFv0103DMeUmx2Wzw/E4=
+github.com/tribalwarshelp/shared v0.0.0-20201230135308-316413cf7f53/go.mod h1:Lxk6zaQhPTPrgz9ksMgg51m8XgflrCo/kRBx2cM3yfk=
 golang.org/x/sys v0.0.0-20191026070338-33540a1f6037/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20200615200032-f1bc736245b1/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=

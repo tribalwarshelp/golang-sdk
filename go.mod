@@ -5,5 +5,5 @@ go 1.14
 require (
 	github.com/Kichiyaki/gqlgen-client v0.0.0-20200604145848-274796c104f4
 	github.com/pkg/errors v0.9.1
-	github.com/tribalwarshelp/shared v0.0.0-20201225112152-d1d8bc92fc33
+	github.com/tribalwarshelp/shared v0.0.0-20201230135308-316413cf7f53
 )
