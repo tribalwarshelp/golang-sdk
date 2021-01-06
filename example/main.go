@@ -56,9 +56,8 @@ func main() {
 		10,
 		0,
 		[]string{"rank ASC"},
-		&models.PlayerFilter{
-			Limit: 10,
-		}, &sdk.PlayerInclude{
+		&models.PlayerFilter{},
+		&sdk.PlayerInclude{
 			Tribe: true,
 		})
 	if err != nil {
