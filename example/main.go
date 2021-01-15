@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/tribalwarshelp/golang-sdk/sdk"
 	"github.com/tribalwarshelp/shared/models"
@@ -130,21 +131,28 @@ func main() {
 		}
 	}
 
-	ennoblements, err := api.LiveEnnoblement.Browse("pl151", &sdk.LiveEnnoblementInclude{
-		NewOwner: true,
-		NewOwnerInclude: sdk.PlayerInclude{
-			Tribe: true,
+	ennoblements, err := api.Ennoblement.Browse("pl151",
+		100,
+		0,
+		[]string{},
+		&models.EnnoblementFilter{
+			EnnobledAtGTE: time.Now().Add(-1 * time.Hour),
 		},
-		OldOwner: true,
-		OldOwnerInclude: sdk.PlayerInclude{
-			Tribe: true,
-		},
-		Village: true,
-	})
+		&sdk.EnnoblementInclude{
+			NewOwner: true,
+			NewOwnerInclude: sdk.PlayerInclude{
+				Tribe: true,
+			},
+			OldOwner: true,
+			OldOwnerInclude: sdk.PlayerInclude{
+				Tribe: true,
+			},
+			Village: true,
+		})
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, ennoblement := range ennoblements {
+	for _, ennoblement := range ennoblements.Items {
 		fmt.Print("\n\n", ennoblement.EnnobledAt.String(), "\n")
 		if ennoblement.NewOwner != nil {
 			log.Println(ennoblement.NewOwner.ID, ennoblement.NewOwner.Name)
