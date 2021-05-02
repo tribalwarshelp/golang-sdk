@@ -2,10 +2,10 @@ package sdk
 
 import (
 	"fmt"
+	"github.com/tribalwarshelp/shared/tw/twmodel"
 
 	"github.com/Kichiyaki/gqlgen-client/client"
 	"github.com/pkg/errors"
-	"github.com/tribalwarshelp/shared/models"
 )
 
 type Player struct {
@@ -28,7 +28,7 @@ func (incl PlayerInclude) String() string {
 	return i
 }
 
-func (p *Player) Read(server string, id int, include *PlayerInclude) (*models.Player, error) {
+func (p *Player) Read(server string, id int, include *PlayerInclude) (*twmodel.Player, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -36,7 +36,7 @@ func (p *Player) Read(server string, id int, include *PlayerInclude) (*models.Pl
 		include = &PlayerInclude{}
 	}
 	resp := struct {
-		Player models.Player `json:"player" gqlgen:"player"`
+		Player twmodel.Player `json:"player" gqlgen:"player"`
 	}{}
 
 	query := fmt.Sprintf(`
@@ -55,21 +55,21 @@ func (p *Player) Read(server string, id int, include *PlayerInclude) (*models.Pl
 }
 
 type PlayerList struct {
-	Items []*models.Player `json:"items" gqlgen:"items"`
-	Total int              `json:"total" gqlgen:"total"`
+	Items []*twmodel.Player `json:"items" gqlgen:"items"`
+	Total int               `json:"total" gqlgen:"total"`
 }
 
 func (p *Player) Browse(server string,
 	limit,
 	offset int,
 	sort []string,
-	filter *models.PlayerFilter,
+	filter *twmodel.PlayerFilter,
 	include *PlayerInclude) (*PlayerList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
 	if filter == nil {
-		filter = &models.PlayerFilter{}
+		filter = &twmodel.PlayerFilter{}
 	}
 	if include == nil {
 		include = &PlayerInclude{}

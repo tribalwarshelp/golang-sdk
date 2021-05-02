@@ -2,19 +2,19 @@ package sdk
 
 import (
 	"fmt"
+	"github.com/tribalwarshelp/shared/tw/twmodel"
 
 	"github.com/Kichiyaki/gqlgen-client/client"
 	"github.com/pkg/errors"
-	"github.com/tribalwarshelp/shared/models"
 )
 
 type Version struct {
 	sdk *SDK
 }
 
-func (v *Version) Read(code models.VersionCode) (*models.Version, error) {
+func (v *Version) Read(code twmodel.VersionCode) (*twmodel.Version, error) {
 	resp := struct {
-		Version models.Version `json:"version" gqlgen:"version"`
+		Version twmodel.Version `json:"version" gqlgen:"version"`
 	}{}
 	query := fmt.Sprintf(`
 		query version($code: VersionCode!) {
@@ -31,16 +31,16 @@ func (v *Version) Read(code models.VersionCode) (*models.Version, error) {
 }
 
 type VersionList struct {
-	Items []*models.Version `json:"items" gqlgen:"items"`
-	Total int               `json:"total" gqlgen:"total"`
+	Items []*twmodel.Version `json:"items" gqlgen:"items"`
+	Total int                `json:"total" gqlgen:"total"`
 }
 
 func (v *Version) Browse(limit,
 	offset int,
 	sort []string,
-	filter *models.VersionFilter) (*VersionList, error) {
+	filter *twmodel.VersionFilter) (*VersionList, error) {
 	if filter == nil {
-		filter = &models.VersionFilter{}
+		filter = &twmodel.VersionFilter{}
 	}
 	resp := struct {
 		Versions VersionList `json:"versions" gqlgen:"versions"`

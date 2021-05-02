@@ -2,19 +2,19 @@ package sdk
 
 import (
 	"fmt"
+	"github.com/tribalwarshelp/shared/tw/twmodel"
 
 	"github.com/Kichiyaki/gqlgen-client/client"
 	"github.com/pkg/errors"
-	"github.com/tribalwarshelp/shared/models"
 )
 
 type Tribe struct {
 	sdk *SDK
 }
 
-func (t *Tribe) Read(server string, id int) (*models.Tribe, error) {
+func (t *Tribe) Read(server string, id int) (*twmodel.Tribe, error) {
 	resp := struct {
-		Tribe models.Tribe `json:"tribe" gqlgen:"tribe"`
+		Tribe twmodel.Tribe `json:"tribe" gqlgen:"tribe"`
 	}{}
 	query := fmt.Sprintf(`
 		query tribe($server: String!, $id: Int!) {
@@ -31,17 +31,17 @@ func (t *Tribe) Read(server string, id int) (*models.Tribe, error) {
 }
 
 type TribeList struct {
-	Items []*models.Tribe `json:"items" gqlgen:"items"`
-	Total int             `json:"total" gqlgen:"total"`
+	Items []*twmodel.Tribe `json:"items" gqlgen:"items"`
+	Total int              `json:"total" gqlgen:"total"`
 }
 
 func (t *Tribe) Browse(server string,
 	limit,
 	offset int,
 	sort []string,
-	filter *models.TribeFilter) (*TribeList, error) {
+	filter *twmodel.TribeFilter) (*TribeList, error) {
 	if filter == nil {
-		filter = &models.TribeFilter{}
+		filter = &twmodel.TribeFilter{}
 	}
 	resp := struct {
 		Tribes TribeList `json:"tribes" gqlgen:"tribes"`

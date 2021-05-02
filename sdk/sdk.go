@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"fmt"
+	"github.com/Kichiyaki/goutil/strutil"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -109,7 +110,7 @@ func New(url string) *SDK {
 }
 
 func (sdk *SDK) Post(query string, response interface{}, options ...client.Option) error {
-	return sdk.client.Post(minifyString(query), response, options...)
+	return sdk.client.Post(strutil.Minify(query, " "), response, options...)
 }
 
 func (sdk *SDK) doRequest(w http.ResponseWriter, r *http.Request) {
