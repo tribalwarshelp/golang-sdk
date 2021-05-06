@@ -2,10 +2,10 @@ package sdk
 
 import (
 	"fmt"
+	"github.com/tribalwarshelp/shared/tw/twmodel"
 
 	"github.com/Kichiyaki/gqlgen-client/client"
 	"github.com/pkg/errors"
-	"github.com/tribalwarshelp/shared/models"
 )
 
 type Server struct {
@@ -28,12 +28,12 @@ func (incl ServerInclude) String() string {
 	return i
 }
 
-func (s *Server) Read(key string, incl *ServerInclude) (*models.Server, error) {
+func (s *Server) Read(key string, incl *ServerInclude) (*twmodel.Server, error) {
 	if incl == nil {
 		incl = &ServerInclude{}
 	}
 	resp := struct {
-		Server models.Server `json:"server" gqlgen:"server"`
+		Server twmodel.Server `json:"server" gqlgen:"server"`
 	}{}
 	query := fmt.Sprintf(`
 		query server($key: String!) {
@@ -58,20 +58,20 @@ func (s *Server) Read(key string, incl *ServerInclude) (*models.Server, error) {
 }
 
 type ServerList struct {
-	Items []*models.Server `json:"items" gqlgen:"items"`
-	Total int              `json:"total" gqlgen:"total"`
+	Items []*twmodel.Server `json:"items" gqlgen:"items"`
+	Total int               `json:"total" gqlgen:"total"`
 }
 
 func (s *Server) Browse(limit,
 	offset int,
 	sort []string,
-	filter *models.ServerFilter,
+	filter *twmodel.ServerFilter,
 	incl *ServerInclude) (*ServerList, error) {
 	if incl == nil {
 		incl = &ServerInclude{}
 	}
 	if filter == nil {
-		filter = &models.ServerFilter{}
+		filter = &twmodel.ServerFilter{}
 	}
 	resp := struct {
 		Servers ServerList `json:"servers" gqlgen:"servers"`

@@ -2,10 +2,10 @@ package sdk
 
 import (
 	"fmt"
+	"github.com/tribalwarshelp/shared/tw/twmodel"
 
 	"github.com/Kichiyaki/gqlgen-client/client"
 	"github.com/pkg/errors"
-	"github.com/tribalwarshelp/shared/models"
 )
 
 type Ennoblement struct {
@@ -49,15 +49,15 @@ func (incl EnnoblementInclude) String() string {
 }
 
 type EnnoblementList struct {
-	Items []*models.Ennoblement `json:"items" gqlgen:"items"`
-	Total int                   `json:"total" gqlgen:"total"`
+	Items []*twmodel.Ennoblement `json:"items" gqlgen:"items"`
+	Total int                    `json:"total" gqlgen:"total"`
 }
 
 func (en *Ennoblement) Browse(server string,
 	limit,
 	offset int,
 	sort []string,
-	filter *models.EnnoblementFilter,
+	filter *twmodel.EnnoblementFilter,
 	include *EnnoblementInclude) (*EnnoblementList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty

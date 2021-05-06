@@ -2,10 +2,10 @@ package sdk
 
 import (
 	"fmt"
+	"github.com/tribalwarshelp/shared/tw/twmodel"
 
 	"github.com/Kichiyaki/gqlgen-client/client"
 	"github.com/pkg/errors"
-	"github.com/tribalwarshelp/shared/models"
 )
 
 type Village struct {
@@ -30,7 +30,7 @@ func (incl VillageInclude) String() string {
 	return i
 }
 
-func (v *Village) Read(server string, id int, include *VillageInclude) (*models.Village, error) {
+func (v *Village) Read(server string, id int, include *VillageInclude) (*twmodel.Village, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
@@ -38,7 +38,7 @@ func (v *Village) Read(server string, id int, include *VillageInclude) (*models.
 		include = &VillageInclude{}
 	}
 	resp := struct {
-		Village models.Village `json:"village" gqlgen:"village"`
+		Village twmodel.Village `json:"village" gqlgen:"village"`
 	}{}
 
 	query := fmt.Sprintf(`
@@ -57,21 +57,21 @@ func (v *Village) Read(server string, id int, include *VillageInclude) (*models.
 }
 
 type VillageList struct {
-	Items []*models.Village `json:"items" gqlgen:"items"`
-	Total int               `json:"total" gqlgen:"total"`
+	Items []*twmodel.Village `json:"items" gqlgen:"items"`
+	Total int                `json:"total" gqlgen:"total"`
 }
 
 func (v *Village) Browse(server string,
 	limit,
 	offset int,
 	sort []string,
-	filter *models.VillageFilter,
+	filter *twmodel.VillageFilter,
 	include *VillageInclude) (*VillageList, error) {
 	if server == "" {
 		return nil, ErrServerNameIsEmpty
 	}
 	if filter == nil {
-		filter = &models.VillageFilter{}
+		filter = &twmodel.VillageFilter{}
 	}
 	if include == nil {
 		include = &VillageInclude{}

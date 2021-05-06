@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/tribalwarshelp/shared/tw/twmodel"
 	"log"
 	"os"
 	"time"
 
 	"github.com/tribalwarshelp/golang-sdk/sdk"
-	"github.com/tribalwarshelp/shared/models"
 )
 
 func init() {
@@ -17,13 +17,13 @@ func init() {
 func main() {
 	api := sdk.New("https://api.tribalwarshelp.com/graphql")
 
-	version, err := api.Version.Read(models.VersionCodePL)
+	version, err := api.Version.Read(twmodel.VersionCodePL)
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println(version.Name, version.Code, version.Host, version.Timezone)
 
-	versionList, err := api.Version.Browse(0, 0, []string{}, &models.VersionFilter{
+	versionList, err := api.Version.Browse(0, 0, []string{}, &twmodel.VersionFilter{
 		HostMATCH: "plemiona%",
 	})
 	if err != nil {
@@ -57,7 +57,7 @@ func main() {
 		10,
 		0,
 		[]string{"rank ASC"},
-		&models.PlayerFilter{},
+		&twmodel.PlayerFilter{},
 		&sdk.PlayerInclude{
 			Tribe: true,
 		})
@@ -77,7 +77,7 @@ func main() {
 	}
 	log.Println(tribe.ID, tribe.Name, tribe.Tag, tribe.RankAtt, tribe.RankDef)
 
-	tribeList, err := api.Tribe.Browse("pl151", 10, 0, []string{}, &models.TribeFilter{
+	tribeList, err := api.Tribe.Browse("pl151", 10, 0, []string{}, &twmodel.TribeFilter{
 		TagIEQ: ":.+.:",
 	})
 	if err != nil {
@@ -108,7 +108,7 @@ func main() {
 		10,
 		0,
 		[]string{"id ASC"},
-		&models.VillageFilter{
+		&twmodel.VillageFilter{
 			PlayerID: []int{699270453},
 		}, &sdk.VillageInclude{
 			Player: true,
@@ -135,7 +135,7 @@ func main() {
 		100,
 		0,
 		[]string{},
-		&models.EnnoblementFilter{
+		&twmodel.EnnoblementFilter{
 			EnnobledAtGTE: time.Now().Add(-1 * time.Hour),
 		},
 		&sdk.EnnoblementInclude{
