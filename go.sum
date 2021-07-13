@@ -88,6 +88,8 @@ github.com/tribalwarshelp/shared v0.0.0-20210704200704-f3e5bd092975 h1:H0Dm+nHpb
 github.com/tribalwarshelp/shared v0.0.0-20210704200704-f3e5bd092975/go.mod h1:R7761+5rdyaMUM2dPMgBma05Z8XDgA3bCl/Grydb09g=
 github.com/tribalwarshelp/shared v0.0.0-20210712092456-dcd6203b1fd9 h1:rpuecZUAul4lCdcWjYx05ZNDff6RBbwJatxOcYpFjRY=
 github.com/tribalwarshelp/shared v0.0.0-20210712092456-dcd6203b1fd9/go.mod h1:M+33qeTM/oxG7IyxKbIZqs0wqpB5nEHPfgdo29kqHMI=
+github.com/tribalwarshelp/shared v0.0.0-20210713144319-ef3e1dd45958 h1:3nbEj2Z3qe/impQRB3Pc7vUpiNinaipY0n8ZuT73wIM=
+github.com/tribalwarshelp/shared v0.0.0-20210713144319-ef3e1dd45958/go.mod h1:M+33qeTM/oxG7IyxKbIZqs0wqpB5nEHPfgdo29kqHMI=
 github.com/vmihailenco/bufpool v0.1.11 h1:gOq2WmBrq0i2yW5QJ16ykccQ4wH9UyEsgLm6czKAd94=
 github.com/vmihailenco/bufpool v0.1.11/go.mod h1:AFf/MOy3l2CFTKbxwt0mp2MwnqjNEs5H/UxrkA5jxTQ=
 github.com/vmihailenco/msgpack/v5 v5.3.0/go.mod h1:7xyJ9e+0+9SaZT0Wt1RGleJXzli6Q/V5KbhBonMG9jc=
